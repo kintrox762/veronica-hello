@@ -1,0 +1,41 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Make Gradle executable
+        run: chmod +x ./gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew clean assembleDebug --warning-mode all
+
+      - name: Copy APK to Veronica.apk
+        run: |
+          APK=$(find app/build/outputs/apk -type f -name "*debug*.apk" | head -n1)
+          test -n "$APK" || (echo "No debug APK found" && exit 1)
+          cp "$APK" Veronica.apk
+          ls -lh Veronica.apk
+
+      - name: Upload artifact (Veronica.apk)
+        uses: actions/upload-artifact@v4
+        with:
+          name: veronica-apk
+          path: Veronica.apk
+          if-no-files-found: error
+          retention-days: 7

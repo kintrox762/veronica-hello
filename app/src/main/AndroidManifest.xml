@@ -1,8 +1,10 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.you.veronica">
 
-    <application android:label="Veronica Hello" android:icon="@mipmap/ic_launcher" android:theme="@style/Theme.Veronica" android:label="Veronica Hello"
+    <application
         android:label="Veronica Hello"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:theme="@style/Theme.Veronica">
 
         <activity
             android:name=".MainActivity"

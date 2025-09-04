@@ -1,0 +1,12 @@
+# Ignore Gradle cache and build artifacts
+.gradle/
+build/
+app/build/
+
+# Ignore log files
+*.log
+
+# Ignore local configs
+local.properties
+.idea/
+*.iml

@@ -1,0 +1,38 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+  <application
+      android:label="Veronica"
+      android:theme="@style/Theme.Veronica">
+
+    <activity
+        android:name=".MainActivity"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+
+    <!-- Overlay foreground service -->
+    <service
+        android:name=".overlay.VeronicaOverlayService"
+        android:exported="false"
+        android:foregroundServiceType="mediaProjection"/>
+
+    <!-- Quick Settings tile service: must declare exported when an intent-filter exists -->
+    <service
+        android:name=".qs.VeronicaTileService"
+        android:label="Veronica"
+        android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="android.service.quicksettings.action.QS_TILE"/>
+      </intent-filter>
+    </service>
+
+  </application>
+</manifest>

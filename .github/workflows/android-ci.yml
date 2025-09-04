@@ -19,16 +19,30 @@ jobs:
           java-version: 21
           cache: gradle
 
+      # Decode your keystore from a GitHub Secret
+      - name: Decode keystore
+        run: echo "${{ secrets.KEYSTORE_B64 }}" | base64 -d > veronica.keystore
+
+      # Export signing + version env vars for Gradle (auto-bumps versionCode)
+      - name: Export env for signing & version
+        run: |
+          echo "SIGN_STORE_FILE=$GITHUB_WORKSPACE/veronica.keystore" >> $GITHUB_ENV
+          echo "SIGN_STORE_PASS=${{ secrets.KEYSTORE_PASSWORD }}"   >> $GITHUB_ENV
+          echo "SIGN_KEY_ALIAS=${{ secrets.KEY_ALIAS }}"            >> $GITHUB_ENV
+          echo "SIGN_KEY_PASS=${{ secrets.KEY_PASSWORD }}"          >> $GITHUB_ENV
+          echo "VER_CODE=${{ github.run_number }}"                  >> $GITHUB_ENV
+          echo "VER_NAME=1.0.${{ github.run_number }}"              >> $GITHUB_ENV
+
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      - name: Build Debug APK
-        run: ./gradlew clean assembleDebug --warning-mode all
+      - name: Build Release APK (signed)
+        run: ./gradlew clean assembleRelease --warning-mode all
 
       - name: Copy APK to Veronica.apk
         run: |
-          APK=$(find app/build/outputs/apk -type f -name "*debug*.apk" | head -n1)
-          test -n "$APK" || (echo "No debug APK found" && exit 1)
+          APK=$(find app/build/outputs/apk/release -type f -name "*release*.apk" | head -n1)
+          test -n "$APK" || (echo "No release APK found" && exit 1)
           cp "$APK" Veronica.apk
           ls -lh Veronica.apk
 

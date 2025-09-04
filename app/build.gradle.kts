@@ -1,5 +1,29 @@
 plugins { id("com.android.application"); id("org.jetbrains.kotlin.android") }
 android {
+    defaultConfig {
+        applicationId = "com.you.veronica"
+        versionCode = (System.getenv("VER_CODE") ?: "1").toInt()
+        versionName = System.getenv("VER_NAME") ?: "1.0"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("SIGN_STORE_FILE") ?: "veronica.keystore")
+            storePassword = System.getenv("SIGN_STORE_PASS")
+            keyAlias = System.getenv("SIGN_KEY_ALIAS")
+            keyPassword = System.getenv("SIGN_KEY_PASS")
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = false
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
     namespace = "com.you.veronica"
     namespace = "com.you.veronica"
   compileSdk = 34

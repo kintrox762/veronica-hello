@@ -1,1 +1,3 @@
-<resources><string name="app_name">Veronica Hello</string></resources>
+<resources>
+    <string name="app_name">Veronica Hello</string>
+</resources>

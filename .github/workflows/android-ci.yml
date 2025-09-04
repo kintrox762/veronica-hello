@@ -35,7 +35,7 @@ jobs:
       - name: Upload artifact (Veronica.apk)
         uses: actions/upload-artifact@v4
         with:
-          name: veronica-apk
+          name: Veronica.apk
           path: Veronica.apk
           if-no-files-found: error
           retention-days: 7

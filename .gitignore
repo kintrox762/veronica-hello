@@ -1,12 +1,31 @@
-# Ignore Gradle cache and build artifacts
+# Gradle
 .gradle/
 build/
 app/build/
+**/build/
 
-# Ignore log files
+# Logs
 *.log
 
-# Ignore local configs
-local.properties
+# Android Studio / IntelliJ
 .idea/
 *.iml
+*.ipr
+*.iws
+out/
+
+# Android
+*.apk
+*.ap_ 
+*.dex
+*.class
+
+# Local config
+local.properties
+
+# Captures (Android Studio profiler/debugger)
+captures/
+
+# Keystore files (don’t upload private signing keys!)
+*.jks
+*.keystore

@@ -9,7 +9,7 @@
       android:theme="@style/Theme.Veronica">
 
     <activity
-        android:name=".MainActivity"
+        android:name="com.you.veronica.MainActivity"
         android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
